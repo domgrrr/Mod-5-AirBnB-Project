@@ -43,4 +43,8 @@ const sessionReducer = (state = initialState, action) => {
   }
 };
 
+export const restoreUser = () => (dispatch) => {
+  
+}
+
 export default sessionReducer;
