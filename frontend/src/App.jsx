@@ -1,5 +1,8 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import LoginFormPage from './components/LoginFormPage';
+import * as sessionActions from './store/session';
 
 const router = createBrowserRouter([
   {
