@@ -1,5 +1,3 @@
-// frontend/src/App.jsx
-
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import LoginFormPage from './components/LoginFormPage';
 
