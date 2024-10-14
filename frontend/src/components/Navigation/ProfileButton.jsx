@@ -14,10 +14,10 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button>
+      <button onClick={() => setShowMenu(!showMenu)}>
         <FaUserCircle />
       </button>
-      <ul className="profile-dropdown">
+      <ul className={ulClassName}>
         <li>{user.username}</li>
         <li>{user.firstName} {user.lastName}</li>
         <li>{user.email}</li>
