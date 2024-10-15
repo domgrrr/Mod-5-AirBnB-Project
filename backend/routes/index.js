@@ -2,9 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const apiRouter = require('./api');
-const mapsRouter = require('/maps');
 
-router.use('/maps', mapsRouter);
 router.use('/api', apiRouter);
 
 // Static routes
