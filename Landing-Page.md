@@ -1,7 +1,21 @@
 # List of All Spots
 
-## Fetch the Spots Data
+## Fetch The Spots Data
 * Fetch data from the backend
+  
+  a.  Import the spotsReducer
+  ```js
+  import spotsReducer from './spotsReducer';
+  ```
+
+  b.  Add it to the rootReducer
+  ```js
+  const rootReducer = combineReducers({
+    session: sessionReducer,
+    spots: spotsReducer,  //  Add the spots reducer
+    //  Add Reducers Here
+  });
+  ```
 
 ## Create The Spot Tile Component
 * Create a component for the spot tile with required elements
