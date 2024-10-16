@@ -11,6 +11,8 @@ const SpetDetail = () => {
   }
 
   return (
-    
+    <div className="spot-detail">
+      <h1>{spot.name}</h1>
+    </div>
   )
 }
