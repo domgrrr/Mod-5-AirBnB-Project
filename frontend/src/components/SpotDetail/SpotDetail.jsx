@@ -24,7 +24,16 @@ const SpetDetail = () => {
           ))}
         </div>
       </div>
-      
+      <div className="hosted-by">
+        Hosted by {spot.firstName}, {spot.lastName}
+      </div>
+      <p>{spot.description}</p>
+      <div className="callout-box">
+        <div className="price">
+          ${spot.price} / night
+        </div>
+        <button onClick={() => alert('Feature coming soon')}>Reserve</button>
+      </div>
     </div>
-  )
-}
+  );
+};
