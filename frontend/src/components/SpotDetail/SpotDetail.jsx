@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import './SpotDetail.css';
 
-const SpetDetail = () => {
+const SpotDetail = () => {
   const { spotId } = useParams();
   const spot = useSelector((state) => state.spots.spots.find(s => s.id === spotId));
 
