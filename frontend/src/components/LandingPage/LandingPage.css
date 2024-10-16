@@ -1,0 +1,22 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+.landing-page {
+  padding: 20px;
+  text-align: center;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+spots-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
