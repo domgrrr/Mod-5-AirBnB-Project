@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from'react-redux';
 import { fetchSpots } from '../store/spotsReducer';
 import SpotTile from './SpotTile/SpotTile';
@@ -6,7 +6,7 @@ import './LandingPage.css';
 
 const LandingPage = () => {
   const dispatch = useDispatch();
-  const spots = useSelector((state) => state.spots);
+  const spots = useSelector((state) => state.spots.spots);
 
   useEffect(() => {
     dispatch(fetchSpots());
