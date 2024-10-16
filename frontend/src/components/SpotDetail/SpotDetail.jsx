@@ -37,3 +37,5 @@ const SpotDetail = () => {
     </div>
   );
 };
+
+export default SpotDetail;
