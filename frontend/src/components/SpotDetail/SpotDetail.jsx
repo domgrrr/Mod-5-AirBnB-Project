@@ -13,6 +13,18 @@ const SpetDetail = () => {
   return (
     <div className="spot-detail">
       <h1>{spot.name}</h1>
+      <div className="location">
+        Location: {spot.city}, {spot.state}, {spot.country}
+      </div>
+      <div className="images">
+        <img src={spot.largeImage} alt={`${spot.name} large`} className="large-image" />
+        <div className="small-images">
+          {spot.smallImages.map((img, index) => (
+            <img key={index} src={img} alt={`${spot.name} small ${index}`} />
+          ))}
+        </div>
+      </div>
+      
     </div>
   )
 }
