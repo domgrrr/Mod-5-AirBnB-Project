@@ -1,1 +1,3 @@
 node_modules/
+*db/dev.db
+backend/db/dev.db
