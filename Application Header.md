@@ -35,3 +35,11 @@
   ```
 
   f.  Inside the Header function use a return statement to return the jsx to be rendered
+
+    * Inside the return statement we need a header element with a class of header for styling
+
+    * Inside that header we need a link with a class of logo-link to create a clickable link that navigates to the home page
+
+    * Inside that link we need an image element with the class of logo to display the logo image
+
+    * Alongside the link class
