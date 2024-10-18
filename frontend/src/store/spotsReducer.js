@@ -24,7 +24,7 @@ export const fetchSingleSpotFunction = (spotId) => {
       const response = await csrfFetch(`/api/spots/${spotId}`);
       const data = await response.json();
       
-      dispatch(fetchSpotsAction(data));
+      dispatch(fetchSingleSpotAction(data));
       
       const reviewResponse = await csrfFetch(`/api/spots/${spotId}/reviews`);
       const reviewData = await reviewResponse.json();

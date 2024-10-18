@@ -5,6 +5,7 @@ import Navigation from './components/Navigation/Navigation';
 import * as sessionActions from './store/session';
 import LandingPage from './components/LandingPage/LandingPage';
 import SpotDetail from './components/SpotDetail/SpotDetail';
+import Header from './components/Header/Header';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ function Layout() {
   return (
     <>
       <Navigation isLoaded={isLoaded} />
+      <Header />
       {isLoaded && <Outlet />}
     </>
   );
@@ -37,7 +39,7 @@ const router = createBrowserRouter([
           element: <LandingPage />,
          },
          {
-          path: '/spots/:spotsId',
+          path: '/spots/:spotId',
           element: <SpotDetail />,
          }
     ],
