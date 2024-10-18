@@ -22,6 +22,7 @@ module.exports = {
 						// model: { tableName: 'Users', schema: process.env.SCHEMA },
 						model: 'Users',
 						key: 'id',
+            as: 'Owner',
 					},
 					onDelete: 'CASCADE',
 				},
