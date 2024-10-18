@@ -50,70 +50,85 @@ router.get('/', validateQueryParams, async (req, res, next) => {
 	}
 	console.log(where);
 	// try {
-	const spots = await Spot.findAll({
-		// where: where,
-		attributes: {
-			include: [
-				[
-					Sequelize.literal(`(
-					SELECT AVG("air_bnb_schema"."Reviews".stars)
-					FROM "air_bnb_schema"."Reviews"
-					WHERE "air_bnb_schema"."Reviews"."spotId" = "Spot"."id"
-				)`),
-					'avgRating',
-				],
-			],
-		},
-		include: [
-			{
-				model: SpotImage,
-				required: false,
-				where: {
-					preview: true,
-				},
-				attributes: ['url'],
-			},
-		],
-		group: ['Spot.id'],
-		limit: limit,
-		offset: offset,
-	});
-	console.log(spots);
+    const spots = await Spot.findAll({
+      where,
+      limit,
+      offset,
+      attributes: [
+        "id",
+        "ownerId",
+        "address",
+        "city",
+        "state",
+        "country",
+        "lat",
+        "lng",
+        "name",
+        "description",
+        "price",
+        "createdAt",
+        "updatedAt"],
+      include: [
+        {
+          model: User,
+          as: 'Owner',
+          attributes: ["id", "firstName", "lastName"]
+        },
+        {
+          model: SpotImage,
+          attributes: ["id", "url", "preview"]
+        }
+      ]
+    });
 
-	const formattedSpots = spots.map((spot) => {
-		return {
-			id: spot.id,
-			ownerId: spot.ownerId,
-			address: spot.address,
-			city: spot.city,
-			state: spot.state,
-			country: spot.country,
-			lat: parseFloat(spot.lat),
-			lng: parseFloat(spot.lng),
-			name: spot.name,
-			description: spot.description,
-			price: parseFloat(spot.price),
-			createdAt: spot.createdAt,
-			updatedAt: spot.updatedAt,
-			avgRating: spot.dataValues.avgRating
-				? parseFloat(spot.dataValues.avgRating)
-				: null,
-			previewImage:
-				spot.SpotImages && spot.SpotImages.length > 0
-					? spot.SpotImages[0].url
-					: null,
-		};
-	});
+    // Map each spot to include avgRating and previewImage
+    const spotsWithDetails = await Promise.all(
+      spots.map(async (spot) => {
+        const avgRating = await getAvgRating(spot.id);
+        const previewImage = await getPreviewImage(spot.id);
 
-	return res.status(200).json({
-		Spots: formattedSpots,
-		page: queryParams.page,
-		size: queryParams.size,
-	});
-	// } catch (error) {
+        return {
+          ...spot.get(), // Spread the spot attributes
+          avgRating,
+          previewImage
+        };
+      })
+    );
+
+    res.json({ Spots: spotsWithDetails });	// } catch (error) {
 	// 	next(error);
 	// }
 });
+
+// Helper functions
+async function getAvgRating(spotId) {
+  const reviews = await Review.findAll({
+    where: { spotId }
+  });
+
+  if (reviews.length === 0) return null;
+
+  const avgRating =
+    reviews.reduce((acc, review) => acc + review.stars, 0) / reviews.length;
+  return avgRating;
+}
+
+async function getPreviewImage(spotId) {
+  const image = await SpotImage.findOne({
+    where: { spotId, preview: true },
+    limit: 1
+  });
+
+  return image ? image.url : null;
+}
+
+async function getNumReviews(spotId) {
+  const count = await Review.count({
+    where: { spotId }
+  });
+
+  return count; // Return the total number of reviews
+}
 
 // GET all spots owned by current user
 
@@ -178,72 +193,73 @@ router.get('/current', requireAuth, async (req, res, next) => {
 
 // GET spot by id
 
-router.get('/:spotId', async (req, res, next) => {
-	const spot = await Spot.findByPk(req.params.spotId, {
-		attributes: {
-			include: [
-				[
-					Sequelize.literal(`(
-				SELECT AVG("air_bnb_schema"."Reviews".stars)
-				FROM "air_bnb_schema"."Reviews"
-				WHERE "air_bnb_schema"."Reviews"."spotId" = "Spot"."id"
-			)`),
-					'avgRating',
-				],
-				[
-					Sequelize.literal(`(
-				SELECT COUNT("air_bnb_schema"."Reviews".stars)
-				FROM "air_bnb_schema"."Reviews"
-				WHERE "air_bnb_schema"."Reviews"."spotId" = "Spot"."id"
-			)`),
-					'numReviews',
-				],
-			],
-		},
-		include: [
-			{
-				model: SpotImage,
-				attributes: ['id', 'url', 'preview'],
-				required: false,
-			},
-			{
-				model: User,
-				attributes: ['id', 'firstName', 'lastName'],
-			},
-		],
-		group: ['Spot.id', 'User.id', 'SpotImages.id'],
-	});
+router.get("/:spotId", async (req, res, next) => {
+  const spotId = req.params.spotId;
+  try {
+    const spot = await Spot.findByPk(spotId, {
+      include: [
+        {
+          model: User,
+          as: "Owner",
+          attributes: [
+            "id",
+            "ownerId",
+            "address",
+            "city",
+            "state",
+            "country",
+            "lat",
+            "lng",
+            "name",
+            "description",
+            "price",
+            "createdAt",
+            "updatedAt"
+          ]
+        },
+        {
+          model: SpotImage,
+          attributes: ["id", "url", "preview"]
+        }
+      ]
+    });
 
-	if (!spot) {
-		const err = new Error(`Spot couldn't be found`);
-		err.status = 404;
-		return next(err);
-	}
+    if (!spot)
+      return res.status(404).json({ message: "Spot couldn't be found" });
 
-	const formattedSpot = {
-		id: spot.id,
-		ownerId: spot.ownerId,
-		address: spot.address,
-		city: spot.city,
-		state: spot.state,
-		country: spot.country,
-		lat: spot.lat,
-		lng: spot.lng,
-		name: spot.name,
-		description: spot.description,
-		price: spot.price,
-		createdAt: spot.createdAt,
-		updatedAt: spot.updatedAt,
-		numReviews: spot.dataValues.numReviews || 0,
-		avgStarRating: spot.dataValues.avgRating
-			? parseFloat(spot.dataValues.avgRating)
-			: null,
-		SpotImages: spot.SpotImages,
-		Owner: spot.User,
-	};
-	res.status(200).json(formattedSpot);
+    const spotResponse = {
+      id: spot.id,
+      ownerId: spot.ownerId,
+      address: spot.address,
+      city: spot.city,
+      state: spot.state,
+      country: spot.country,
+      lat: spot.lat,
+      lng: spot.lng,
+      name: spot.name,
+      description: spot.description,
+      price: spot.price,
+      createdAt: spot.createdAt,
+      updatedAt: spot.updatedAt,
+      Owner: {
+        id: spot.Owner.id,
+        firstName: spot.Owner.firstName,
+        lastName: spot.Owner.lastName
+      },
+      SpotImages: spot.SpotImages.map((image) => ({
+        id: image.id,
+        url: image.url,
+        preview: image.preview
+      })),
+      numReviews: await getNumReviews(spot.id),
+      avgStarRating: await getAvgRating(spot.id)
+    };
+
+    res.json(spotResponse);
+  } catch (error) {
+    next(error);
+  }
 });
-
 // POST create a spot
 
 router.post('/', requireAuth, async (req, res, next) => {

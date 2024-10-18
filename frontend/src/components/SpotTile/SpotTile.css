@@ -1,0 +1,32 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+.spot-title {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.spot-title:hover {
+  transform: scale(1.05);
+}
+
+.spot-info {
+  margin-top: 10px;
+}
+
+.spot-location,
+.spot-rating,
+.spot-price {
+  margin: 5px 0;
+}
