@@ -8,7 +8,7 @@ const Header = () => {
         <img src="frontend/public/airbnb-logo.png" alt="App Logo" className="logo" />
       </Link>
       <nav className="auth-buttons">
-
+        
       </nav>
     </header>
   )
