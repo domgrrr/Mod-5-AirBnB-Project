@@ -1,55 +1,166 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-}
-
+/* LandingPage.css */
 .landing-page {
-  padding: 20px;
   max-width: 1200px;
   margin: 0 auto;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0,0, 0.1);
-}
-
-.landing-page h1 {
-  text-align: center;
-  color: #333;
-  font-size: 2.5rem;
-  margin-bottom: 20px;
-}
-
-.spots-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
-}
-
-.spot-tile {
-  border: 1px solid #ccc;
   padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  background: #fff;
 }
 
-.spot-info {
+/* Header styles */
+.header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 16px 24px;
+  border-bottom: 1px solid #ebebeb;
+}
+
+.logo {
+  height: 32px;
+  cursor: pointer;
+}
+
+.menu-button {
+  border-radius: 21px;
+  padding: 5px 5px 5px 12px;
+  border: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+
+/* Spots grid layout */
+.spots-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  padding: 24px;
+}
+
+/* Individual spot tile */
+.spot-tile {
+  position: relative;
+  cursor: pointer;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+
+.spot-tile:hover {
+  transform: scale(1.02);
+}
+
+/* Spot image container */
+.spot-image {
+  aspect-ratio: 1;
+  width: 100%;
+  object-fit: cover;
+  background: #f5f5f5;
+}
+
+/* Spot information */
+.spot-info {
+  padding: 12px 0;
+}
+
+.spot-location {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.location-text {
+  font-size: 15px;
+  font-weight: 500;
+  color: #222;
 }
 
 .rating {
   display: flex;
   align-items: center;
+  gap: 4px;
 }
 
-star-icon {
-  margin-right: 5px;
-  color: #f5c518;
+.price {
+  font-size: 15px;
+  font-weight: 500;
+  color: #222;
+}
+
+.price span {
+  font-weight: normal;
+  color: #717171;
+}
+
+/* Tooltip styles */
+.spot-tile[data-tooltip] {
+  position: relative;
+}
+
+.spot-tile[data-tooltip]::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 8px 12px;
+  background-color: #222;
+  color: white;
+  font-size: 14px;
+  border-radius: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  white-space: nowrap;
+  z-index: 1000;
+}
+
+.spot-tile[data-tooltip]:hover::before {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Responsive layout */
+@media screen and (max-width: 1128px) {
+  .spots-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (max-width: 950px) {
+  .spots-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .spots-list {
+    grid-template-columns: 1fr;
+  }
+  
+  .header {
+    padding: 12px 16px;
+  }
+}
+
+/* Interactive elements */
+.clickable {
+  cursor: pointer;
+}
+
+/* Optional loading state */
+.spot-image.loading {
+  background: linear-gradient(90deg, #f0f0f0 0%, #f8f8f8 50%, #f0f0f0 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
 }

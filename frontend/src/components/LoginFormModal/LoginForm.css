@@ -1,62 +1,128 @@
 body {
   font-family: Arial, sans-serif;
   background-color: #f4f4f4;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
   margin: 0;
+  padding: 0;
+}
+
+form {
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin: 20px auto;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  max-width: 400px;
+  transition: transform 0.2s;
+}
+
+form:hover {
+  transform: scale(1.01);
 }
 
 h1 {
   text-align: center;
   color: #333;
-}
-
-form {
-  background: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 300px;
+  margin-bottom: 20px;
+  font-size: 24px;
 }
 
 label {
   display: block;
-  margin-bottom: 10px;
-  color: #555;
+  margin: 10px 0;
+  color: #333;
+  font-size: 14px;
 }
 
 input {
   width: 100%;
   padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 4px;
+  margin: 5px 0 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
   box-sizing: border-box;
+  transition: border-color 0.2s;
 }
 
 input:focus {
-  border-color: #007bff;
+  border-color: #666;
   outline: none;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+input:hover {
+  border-color: #999;
 }
 
 button {
   width: 100%;
   padding: 10px;
-  background-color: #007bff;
-  border: none;
-  border-radius: 4px;
+  background-color: #333;
   color: white;
-  font-size: 16px;
+  border: none;
+  border-radius: 8px;
   cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #555;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
 }
 
 p {
-  color: red;
+  color: #ff385c;
+  text-align: center;
+  margin: 10px 0;
   font-size: 14px;
-  margin: 0;
+}
+
+/* Optional Demo User Link Styling */
+.demo-user {
+  text-align: center;
+  margin-top: 15px;
+  color: #333;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.demo-user:hover {
+  color: #555;
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 480px) {
+  form {
+    margin: 10px;
+    padding: 15px;
+  }
+
+  h1 {
+    font-size: 20px;
+  }
+
+  button {
+    padding: 8px;
+  }
+}
+
+/* Validation States */
+input:invalid {
+  border-color: #ff385c;
+}
+
+/* Accessibility Focus States */
+*:focus {
+  outline: 2px solid #333;
+  outline-offset: 2px;
+}
+
+/* Animation for Form Submission */
+button:active {
+  transform: scale(0.98);
 }
