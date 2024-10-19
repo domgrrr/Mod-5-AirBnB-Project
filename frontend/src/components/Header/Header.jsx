@@ -8,7 +8,7 @@ const Header = () => {
   return (
     <header className="header">
       <Link to="/" className="logo-link">
-        <img src="frontend/public/airbnb-logo.png" alt="App Logo" className="logo" />
+        <img src="/airbnb-logo.png" alt="App Logo" className="logo" />
       </Link>
       <nav className="auth-buttons">
         {user ? (
@@ -18,7 +18,7 @@ const Header = () => {
           </>
         ) : (
           <>
-            <Link to="/login" className="button"></Link>
+            <Link to="/login" className="button">Log In</Link>
             <Link to="/signup" className="button">Signup</Link>
           </>
         )}
