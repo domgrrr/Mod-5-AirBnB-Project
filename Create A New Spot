@@ -1,0 +1,21 @@
+## Feature 3 Create A New Spot
+
+# 1. Add New Spot Button in the Navigation Bar
+
+* Make sure the button is only visible to logged-in users
+
+# 2. Create the New Spot Form Component
+
+* This component will collect data for the new spot
+
+# 3.  Add Routing
+
+* Ensure the app has routes to access the new pot form
+
+# 4. Handle Form Submission
+
+* Implement form validation and submission logic to handle the spot creation and navigate to the new spot's detail page upon successful creation.
+
+# 5. Styling
+
+* Add css to style the form and ensure it matches the wireframe layout
