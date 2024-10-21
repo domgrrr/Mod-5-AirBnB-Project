@@ -201,21 +201,7 @@ router.get("/:spotId", async (req, res, next) => {
         {
           model: User,
           as: "Owner",
-          attributes: [
-            "id",
-            "ownerId",
-            "address",
-            "city",
-            "state",
-            "country",
-            "lat",
-            "lng",
-            "name",
-            "description",
-            "price",
-            "createdAt",
-            "updatedAt"
-          ]
+          attributes: ["id", "firstName", "lastName"]
         },
         {
           model: SpotImage,
