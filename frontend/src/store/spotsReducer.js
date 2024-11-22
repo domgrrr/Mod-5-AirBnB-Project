@@ -1,12 +1,10 @@
 import { csrfFetch } from "./csrf"
 
-// Action Types
 const SET_SPOTS = 'SET_SPOTS';
 const SET_SINGLE_SPOT = 'SET_SINGLE_SPOT';
 const SET_SPOT_REVIEWS = 'SET_SPOT_REVIEWS';
 const CREATE_SPOT = 'spots/CREATE_SPOT';
 
-// Action Creators
 export const fetchSpotsAction = (spots) => ({
   type: SET_SPOTS,
   payload: spots
@@ -27,7 +25,6 @@ export const createSpotAction = (spot) => ({
   payload: spot
 });
 
-// Thunk Actions
 export const fetchSpotsFunction = () => async (dispatch) => {
   const response = await csrfFetch('/api/spots');
   const data = await response.json();
@@ -77,7 +74,6 @@ const initialState = {
   spotReviews: []
 };
 
-// Reducer
 const spotsReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_SPOTS:
