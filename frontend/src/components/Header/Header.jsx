@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../store/session';
 import OpenModalButton from '../OpenModalButton/index';
@@ -12,6 +12,7 @@ const Header = () => {
  const user = useSelector((state) => state.session.user);
  const [showMenu, setShowMenu] = useState(false);
  const menuRef = useRef();
+ const navigate = useNavigate();
 
  const openMenu = () => {
    if (!showMenu) setShowMenu(true);
@@ -33,9 +34,8 @@ const Header = () => {
  const handleLogout = () => {
    dispatch(logout());
    setShowMenu(false);
+   navigate('/');
  };
-
- const closeMenu = () => setShowMenu(false);
 
  return (
    <header className="header">

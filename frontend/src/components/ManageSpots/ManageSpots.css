@@ -1,0 +1,117 @@
+.manage-spots-container {
+  padding: 20px 80px;
+}
+
+.manage-spots-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.manage-spots-header h1 {
+  font-size: 2rem;
+  margin: 0;
+}
+
+.create-new-spot-button {
+  background-color: #ff5a5f;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.create-new-spot-button:hover {
+  background-color: #e14b4f;
+}
+
+.spots-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.spot-tile {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.spot-tile:hover {
+  transform: scale(1.02);
+}
+
+.spot-content {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
+
+.spot-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.spot-info {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.spot-location-rating {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.spot-rating {
+  color: #ff9500;
+  display: flex;
+  align-items: center;
+}
+
+.spot-rating i {
+  margin-right: 5px;
+}
+
+.spot-price {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.spot-buttons {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #f7f7f7;
+  border-top: 1px solid #ddd;
+}
+
+.update-button, .delete-button {
+  background-color: #1e90ff;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  flex: 1;
+  margin: 0 5px;
+  text-align: center;
+}
+
+.delete-button {
+  background-color: #ff5a5f;
+}
+
+.update-button:hover {
+  background-color: #007bff;
+}
+
+.delete-button:hover {
+  background-color: #e14b4f;
+}

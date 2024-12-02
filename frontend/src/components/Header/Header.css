@@ -97,3 +97,21 @@
 .logout-button {
   color: #222;
 }
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px 20px;
+  }
+
+  .auth-buttons {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .user-menu-dropdown {
+    right: auto;
+    left: 0;
+  }
+}
