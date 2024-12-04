@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { createSpot } from '../../store/spotsReducer';
+import { createSpot, fetchSingleSpotFunction } from '../../store/spotsReducer';
 import './CreateSpotForm.css';
 
 const CreateSpotForm = () => {
@@ -40,13 +40,18 @@ const CreateSpotForm = () => {
     if (validateForm()) {
       try {
         const newSpot = await dispatch(createSpot(formData));
-        navigate(`/spots/${newSpot.id}`);
+        if (newSpot && newSpot.id) {
+          await dispatch(fetchSingleSpotFunction(newSpot.id));
+          navigate(`/spots/${newSpot.id}`);
+        } else {
+          throw new Error('Failed to create spot');
+        }
       } catch (err) {
+        console.error('Error creating spot:', err);
         setErrors(err.errors || { form: 'An error occurred. Please try again.' });
       }
     }
   };
-
 
   const validateForm = () => {
     const newErrors = {};
@@ -61,6 +66,15 @@ const CreateSpotForm = () => {
     
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
+  };
+
+  // Calculate remaining characters needed
+  const remainingChars = 30 - formData.description.length;
+  const getCharacterCountText = () => {
+    if (remainingChars > 0) {
+      return `${remainingChars} more characters needed`;
+    }
+    return `${formData.description.length} characters (minimum reached)`;
   };
 
   return (
@@ -132,6 +146,9 @@ const CreateSpotForm = () => {
             onChange={handleChange}
             placeholder="Please write at least 30 characters"
           />
+          <p className={`char-count ${remainingChars > 0 ? 'warning' : 'success'}`}>
+            {getCharacterCountText()}
+          </p>
           {errors.description && <p className="error">{errors.description}</p>}
         </section>
 
@@ -203,6 +220,7 @@ const CreateSpotForm = () => {
         </section>
 
         <button type="submit">Create Spot</button>
+        {errors.form && <p className="error">{errors.form}</p>}
       </form>
     </div>
   );

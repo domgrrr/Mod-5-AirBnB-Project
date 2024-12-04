@@ -96,3 +96,17 @@
     gap: 0;
   }
 }
+
+.create-spot-form-container .char-count {
+  font-size: 14px;
+  margin-top: -10px;
+  margin-bottom: 15px;
+}
+
+.create-spot-form-container .char-count.warning {
+  color: #FF385C;
+}
+
+.create-spot-form-container .char-count.success {
+  color: #00A699;  /* Airbnb-style teal color for success */
+}

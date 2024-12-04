@@ -30,3 +30,45 @@ body {
 .spot-price {
   margin: 5px 0;
 }
+
+.spot-tile {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.spot-tile a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.spot-thumbnail {
+  width: 100%;
+  aspect-ratio: 1; /* Forces a square ratio */
+  object-fit: cover; /* This maintains aspect ratio while filling the container */
+  border-radius: 12px;
+  transition: transform 0.2s ease;
+}
+
+.spot-info {
+  padding: 8px 0;
+}
+
+.spot-location {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  color: #222;
+  margin-bottom: 4px;
+}
+
+.spot-rating {
+  font-weight: 600;
+}
+
+.spot-price {
+  font-size: 14px;
+  font-weight: 600;
+  color: #222;
+}
