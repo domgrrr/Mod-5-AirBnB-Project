@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import StarRating from '../StarRating';
 import './SpotTile.css';
 
 const SpotTile = ({ spot }) => {
@@ -11,15 +12,19 @@ const SpotTile = ({ spot }) => {
             {spot.city}, {spot.state}
           </div>
           <div className="spot-rating">
-            {spot.avgRating ? spot.avgRating.toFixed(1) : 'New'}
+            <StarRating 
+              rating={spot.avgRating} 
+              showCount={true}
+              reviewCount={spot.numReviews}
+            />
           </div>
           <div className="spot-price">
-            ${spot.price} / night
+            ${spot.price} night
           </div>
         </div>
       </Link>
     </div>
-  )
+  );
 };
 
 export default SpotTile;

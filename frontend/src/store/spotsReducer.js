@@ -6,6 +6,8 @@ const SET_SPOT_REVIEWS = 'SET_SPOT_REVIEWS';
 const CREATE_SPOT = 'spots/CREATE_SPOT';
 const DELETE_SPOT = 'spots/DELETE_SPOT';
 const SET_USER_SPOTS = 'spots/SET_USER_SPOTS';
+const CREATE_REVIEW = 'spots/CREATE_REVIEW';
+const DELETE_REVIEW = 'spots/DELETE_REVIEW';
 
 // Action Creators
 export const fetchSpotsAction = (spots) => ({
@@ -36,6 +38,16 @@ export const deleteSpotAction = (spotId) => ({
 export const setUserSpotsAction = (spots) => ({
   type: SET_USER_SPOTS,
   payload: spots
+});
+
+export const createReviewAction = (review) => ({
+  type: CREATE_REVIEW,
+  payload: review
+});
+
+export const deleteReviewAction = (reviewId, spotId) => ({
+  type: DELETE_REVIEW,
+  payload: { reviewId, spotId }
 });
 
 // Thunk Action Creators
@@ -203,6 +215,73 @@ export const deleteSpot = (spotId) => async (dispatch) => {
   }
 };
 
+export const createReview = (spotId, reviewData) => async (dispatch) => {
+  try {
+    const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        review: reviewData.review,
+        stars: parseInt(reviewData.stars)
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to create review');
+    }
+
+    const newReview = await response.json();
+    
+    // Fetch updated spot data to get new average rating
+    const spotResponse = await csrfFetch(`/api/spots/${spotId}`);
+    const updatedSpot = await spotResponse.json();
+    
+    // Fetch all reviews again to ensure correct order
+    const reviewsResponse = await csrfFetch(`/api/spots/${spotId}/reviews`);
+    const reviewsData = await reviewsResponse.json();
+
+    dispatch(createReviewAction(newReview));
+    dispatch(fetchSingleSpotAction(updatedSpot));
+    dispatch(setSingleSpotReviewsAction(reviewsData.Reviews));
+    
+    return newReview;
+  } catch (error) {
+    console.error('Error creating review:', error);
+    throw error;
+  }
+};
+
+export const deleteReview = (reviewId, spotId) => async (dispatch) => {
+  try {
+    const response = await csrfFetch(`/api/reviews/${reviewId}`, {
+      method: 'DELETE'
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to delete review');
+    }
+
+    // Fetch updated spot data to get new average rating
+    const spotResponse = await csrfFetch(`/api/spots/${spotId}`);
+    const updatedSpot = await spotResponse.json();
+    
+    // Fetch all reviews again to ensure correct order
+    const reviewsResponse = await csrfFetch(`/api/spots/${spotId}/reviews`);
+    const reviewsData = await reviewsResponse.json();
+
+    dispatch(deleteReviewAction(reviewId, spotId));
+    dispatch(fetchSingleSpotAction(updatedSpot));
+    dispatch(setSingleSpotReviewsAction(reviewsData.Reviews));
+    
+    return reviewId;
+  } catch (error) {
+    console.error('Error deleting review:', error);
+    throw error;
+  }
+};
+
 // Initial State
 const initialState = {
   spots: [],
@@ -250,6 +329,18 @@ const spotsReducer = (state = initialState, action) => {
         ...state,
         spots: state.spots.filter(spot => spot.id !== action.payload),
         spot: state.spot?.id === action.payload ? null : state.spot
+      };
+    case CREATE_REVIEW:
+      return {
+        ...state,
+        spotReviews: [action.payload, ...state.spotReviews]
+      };
+    case DELETE_REVIEW:
+      return {
+        ...state,
+        spotReviews: state.spotReviews.filter(
+          review => review.id !== action.payload.reviewId
+        )
       };
     default:
       return state;

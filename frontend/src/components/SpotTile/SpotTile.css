@@ -1,34 +1,9 @@
+/* Reset for body - you might want to move this to a global CSS file */
 body {
   font-family: Arial, sans-serif;
   background-color: #f4f4f4;
   margin: 0;
   padding: 0;
-}
-
-.spot-title {
-  border: 1px solid #ccc;
-  padding: 10px;
-  margin: 10px;
-  text-align: center;
-  cursor: pointer;
-  transition: transform 0.2s;
-  background: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-}
-
-.spot-title:hover {
-  transform: scale(1.05);
-}
-
-.spot-info {
-  margin-top: 10px;
-}
-
-.spot-location,
-.spot-rating,
-.spot-price {
-  margin: 5px 0;
 }
 
 .spot-tile {
@@ -44,8 +19,8 @@ body {
 
 .spot-thumbnail {
   width: 100%;
-  aspect-ratio: 1; /* Forces a square ratio */
-  object-fit: cover; /* This maintains aspect ratio while filling the container */
+  aspect-ratio: 1;
+  object-fit: cover;
   border-radius: 12px;
   transition: transform 0.2s ease;
 }
@@ -57,18 +32,24 @@ body {
 .spot-location {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   font-size: 14px;
   color: #222;
   margin-bottom: 4px;
 }
 
 .spot-rating {
-  font-weight: 600;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
 }
 
 .spot-price {
   font-size: 14px;
-  font-weight: 600;
   color: #222;
+  margin-top: 4px;
+}
+
+.spot-price span {
+  font-weight: 600;
 }
