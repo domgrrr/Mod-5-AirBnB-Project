@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { fetchSingleSpotFunction } from "../../store/spotsReducer";
 import StarRating from "../StarRating";
 import ReviewModal from "../ReviewModal";
+import DeleteReviewModal from "../DeleteReviewModal";
 import "./SpotDetail.css";
 
 const SpotDetail = () => {
@@ -13,6 +14,7 @@ const SpotDetail = () => {
   const reviews = useSelector((state) => state.spots.spotReviews);
   const sessionUser = useSelector((state) => state.session.user);
   const [showReviewModal, setShowReviewModal] = useState(false);
+  const [reviewToDelete, setReviewToDelete] = useState(null);
 
   useEffect(() => {
     const fetchSpot = async () => {
@@ -38,7 +40,48 @@ const SpotDetail = () => {
 
   return (
     <div className='spot-detail'>
-      {/* ... your existing header and images code ... */}
+      <h1>{spot.name}</h1>
+      <div className='location'>
+        {spot.city}, {spot.state}, {spot.country}
+      </div>
+
+      <div className='images'>
+        <img
+          src={largeImage.url}
+          alt={`${spot.name} large`}
+          className='large-image'
+        />
+        <div className='small-images'>
+          {smallImages.map((img) => (
+            <img
+              key={img.id}
+              src={img.url}
+              alt={`${spot.name} small ${img.id}`}
+            />
+          ))}
+        </div>
+      </div>
+
+      <div className='spot-info-container'>
+        <div className='spot-info'>
+          <div className='hosted-by'>
+            Hosted by {spot.Owner?.firstName || 'Unknown'} {spot.Owner?.lastName || ''}
+          </div>
+          <p>{spot.description}</p>
+        </div>
+
+        <div className='callout-box'>
+          <div className='price-rating'>
+            <span className='price'>${spot.price} night</span>
+            <StarRating 
+              rating={spot.avgRating} 
+              showCount={true}
+              reviewCount={reviews.length}
+            />
+          </div>
+          <button onClick={() => alert("Feature coming soon")}>Reserve</button>
+        </div>
+      </div>
 
       <div className='reviews-section'>
         <h2>
@@ -72,6 +115,14 @@ const SpotDetail = () => {
                   })}
                 </div>
                 <p>{review.review}</p>
+                {sessionUser?.id === review.userId && (
+                  <button 
+                    className="delete-review-button"
+                    onClick={() => setReviewToDelete(review.id)}
+                  >
+                    Delete
+                  </button>
+                )}
               </div>
             ))}
           </div>
@@ -82,6 +133,14 @@ const SpotDetail = () => {
         <ReviewModal 
           spotId={spotId} 
           closeModal={() => setShowReviewModal(false)} 
+        />
+      )}
+
+      {reviewToDelete && (
+        <DeleteReviewModal 
+          reviewId={reviewToDelete}
+          spotId={spotId}
+          closeModal={() => setReviewToDelete(null)}
         />
       )}
     </div>
