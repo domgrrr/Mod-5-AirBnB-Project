@@ -12,24 +12,29 @@ module.exports = {
 			[
 				{
 					spotId: 1,
-					url: 'https://example.com/spot1_image1.jpg',
+					url: 'https://i.ibb.co/5vcx2QW/App-Academy.jpg',
 					preview: true,
-				},
-				{
-					spotId: 1,
-					url: 'https://example.com/spot1_image2.jpg',
-					preview: false,
 				},
 				{
 					spotId: 2,
-					url: 'https://example.com/spot2_image1.jpg',
-					preview: true,
+					url: 'https://i.ibb.co/N3rZ8D7/Beach-House.png',
+					preview: false,
 				},
 				{
 					spotId: 3,
-					url: 'https://example.com/spot3_image1.jpg',
+					url: 'https://i.ibb.co/x36KRq3/Mountain-Retreat.jpg',
 					preview: true,
 				},
+				{
+					spotId: 4,
+					url: 'https://i.ibb.co/tLqFQ27/City-Loft.jpg',
+					preview: true,
+				},
+        {
+          spotId: 5,
+          url: 'https://i.ibb.co/F3C25vz/NYC-Apartment.png',
+          preview: true,
+        },
 			],
 			options
 		);
