@@ -8,6 +8,7 @@ const UpdateSpotForm = () => {
   const { spotId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
 
   const [formData, setFormData] = useState({
     country: '',
@@ -30,27 +31,34 @@ const UpdateSpotForm = () => {
 
   useEffect(() => {
     const fetchSpotData = async () => {
-      const { spot } = await dispatch(fetchSingleSpotFunction(spotId));
-      setFormData({
-        country: spot.country,
-        address: spot.address,
-        city: spot.city,
-        state: spot.state,
-        latitude: spot.latitude,
-        longitude: spot.longitude,
-        description: spot.description,
-        name: spot.name,
-        price: spot.price,
-        previewImage: spot.previewImage,
-        image1: spot.images[0]?.url || '',
-        image2: spot.images[1]?.url || '',
-        image3: spot.images[2]?.url || '',
-        image4: spot.images[3]?.url || ''
-      });
+      try {
+        const { spot } = await dispatch(fetchSingleSpotFunction(spotId));
+        setFormData({
+          country: spot.country || '',
+          address: spot.address || '',
+          city: spot.city || '',
+          state: spot.state || '',
+          latitude: spot.lat || '',
+          longitude: spot.lng || '',
+          description: spot.description || '',
+          name: spot.name || '',
+          price: spot.price || '',
+          previewImage: spot.SpotImages?.find(img => img.preview)?.url || '',
+          image1: spot.SpotImages?.filter(img => !img.preview)[0]?.url || '',
+          image2: spot.SpotImages?.filter(img => !img.preview)[1]?.url || '',
+          image3: spot.SpotImages?.filter(img => !img.preview)[2]?.url || '',
+          image4: spot.SpotImages?.filter(img => !img.preview)[3]?.url || ''
+        });
+      } catch (error) {
+        console.error('Error loading spot:', error);
+        navigate('/spots/current');
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     fetchSpotData();
-  }, [dispatch, spotId]);
+  }, [dispatch, spotId, navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -64,8 +72,8 @@ const UpdateSpotForm = () => {
     e.preventDefault();
     if (validateForm()) {
       try {
-        await dispatch(updateSpot(spotId, formData));
-        navigate(`/spots/${spotId}`);
+        const updatedSpot = await dispatch(updateSpot(spotId, formData));
+        navigate(`/spots/${updatedSpot.id}`);
       } catch (err) {
         setErrors(err.errors || { form: 'An error occurred. Please try again.' });
       }
@@ -85,6 +93,16 @@ const UpdateSpotForm = () => {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+
+  const remainingChars = 30 - formData.description.length;
+  const getCharacterCountText = () => {
+    if (remainingChars > 0) {
+      return `${remainingChars} more characters needed`;
+    }
+    return `${formData.description.length} characters (minimum reached)`;
+  };
+
+  if (isLoading) return <div>Loading...</div>;
 
   return (
     <div className="update-spot-form-container">
@@ -157,6 +175,9 @@ const UpdateSpotForm = () => {
             onChange={handleChange}
             placeholder="Please write at least 30 characters"
           />
+          <p className={`char-count ${remainingChars > 0 ? 'warning' : 'success'}`}>
+            {getCharacterCountText()}
+          </p>
           {errors.description && <p className="error">{errors.description}</p>}
         </section>
 
