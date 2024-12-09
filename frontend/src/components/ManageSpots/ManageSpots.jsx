@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { getUserSpots, deleteSpot } from '../../store/spotsReducer';
 import imageMapping from '../../store/imageMapping';
 import ConfirmationModal from '../ConfirmationModal';
@@ -8,7 +8,7 @@ import './ManageSpots.css';
 
 function ManageSpots() {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
   const spots = useSelector(state => state.spots.spots);
   const sessionUser = useSelector(state => state.session.user);
   const [showModal, setShowModal] = useState(false);
@@ -19,7 +19,7 @@ function ManageSpots() {
   }, [dispatch]);
 
   if (!sessionUser) {
-    history.push('/');
+    navigate('/');
     return null;
   }
 
@@ -35,7 +35,7 @@ function ManageSpots() {
   };
 
   const handleUpdate = (spotId) => {
-    history.push(`/spots/${spotId}/edit`);
+    navigate(`/spots/${spotId}/edit`);
   };
 
   const spotsWithImages = spots.map(spot => ({
@@ -49,7 +49,7 @@ function ManageSpots() {
         <h1>Manage Spots</h1>
         {spots.length === 0 && (
           <button 
-            onClick={() => history.push('/spots/new')}
+            onClick={() => navigate('/spots/new')}
             className="create-new-spot-button"
           >
             Create a New Spot
@@ -59,10 +59,13 @@ function ManageSpots() {
 
       <div className="spots-grid">
         {spotsWithImages.map(spot => (
-          <div key={spot.id} className="spot-tile">
+          <div 
+            key={spot.id} 
+            className="spot-tile"
+            onClick={() => navigate(`/spots/${spot.id}`)}
+          >
             <div 
               className="spot-content"
-              onClick={() => history.push(`/spots/${spot.id}`)}
               title={spot.name}
             >
               <img 
@@ -82,7 +85,7 @@ function ManageSpots() {
               </div>
             </div>
             
-            <div className="spot-buttons">
+            <div className="spot-buttons" onClick={(e) => e.stopPropagation()}>
               <button 
                 onClick={(e) => {
                   e.stopPropagation();

@@ -37,6 +37,11 @@ const Header = () => {
    navigate('/');
  };
 
+ const handleManageSpots = () => {
+   navigate('/spots/current');
+   setShowMenu(false);
+ };
+
  return (
    <header className="header">
      <Link to="/" className="logo-link">
@@ -58,6 +63,9 @@ const Header = () => {
                  <p className="user-email" onClick={(e) => e.stopPropagation()}>
                    {user.email}
                  </p>
+                 <button onClick={handleManageSpots} className="menu-button">
+                   Manage Spots
+                 </button>
                  <button onClick={handleLogout} className="logout-button">
                    Log Out
                  </button>
