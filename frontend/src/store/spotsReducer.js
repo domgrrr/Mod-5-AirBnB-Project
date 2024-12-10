@@ -4,6 +4,7 @@ const SET_SPOTS = 'SET_SPOTS';
 const SET_SINGLE_SPOT = 'SET_SINGLE_SPOT';
 const SET_SPOT_REVIEWS = 'SET_SPOT_REVIEWS';
 const CREATE_SPOT = 'spots/CREATE_SPOT';
+const UPDATE_SPOT = 'spots/UPDATE_SPOT';
 const DELETE_SPOT = 'spots/DELETE_SPOT';
 const SET_USER_SPOTS = 'spots/SET_USER_SPOTS';
 const CREATE_REVIEW = 'spots/CREATE_REVIEW';
@@ -27,6 +28,11 @@ export const setSingleSpotReviewsAction = (reviews) => ({
 
 export const createSpotAction = (spot) => ({
   type: CREATE_SPOT,
+  payload: spot
+});
+
+export const updateSpotAction = (spot) => ({
+  type: UPDATE_SPOT,
   payload: spot
 });
 
@@ -95,7 +101,6 @@ export const fetchSingleSpotFunction = (spotId) => async (dispatch) => {
 
 export const createSpot = (spotData) => async (dispatch) => {
   try {
-    // First, create the spot
     const spotResponse = await csrfFetch('/api/spots', {
       method: 'POST',
       headers: {
@@ -176,6 +181,49 @@ export const createSpot = (spotData) => async (dispatch) => {
     return finalSpotData;
   } catch (error) {
     console.error('Error in createSpot:', error);
+    throw error;
+  }
+};
+
+export const updateSpot = (spotId, spotData) => async (dispatch) => {
+  try {
+    const response = await csrfFetch(`/api/spots/${spotId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        address: spotData.address,
+        city: spotData.city,
+        state: spotData.state,
+        country: spotData.country,
+        lat: parseFloat(spotData.latitude) || 0,
+        lng: parseFloat(spotData.longitude) || 0,
+        name: spotData.name,
+        description: spotData.description,
+        price: parseFloat(spotData.price)
+      }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw error;
+    }
+
+    const updatedSpot = await response.json();
+
+    // Fetch the complete updated spot data
+    const finalSpotResponse = await csrfFetch(`/api/spots/${spotId}`);
+    const finalSpotData = await finalSpotResponse.json();
+
+    if (!finalSpotData.SpotImages) {
+      finalSpotData.SpotImages = [];
+    }
+
+    dispatch(updateSpotAction(finalSpotData));
+    return finalSpotData;
+  } catch (error) {
+    console.error('Error updating spot:', error);
     throw error;
   }
 };
@@ -314,6 +362,17 @@ const spotsReducer = (state = initialState, action) => {
       return { 
         ...state, 
         spots: [...state.spots, action.payload],
+        spot: {
+          ...action.payload,
+          SpotImages: action.payload.SpotImages || []
+        }
+      };
+    case UPDATE_SPOT:
+      return {
+        ...state,
+        spots: state.spots.map(spot => 
+          spot.id === action.payload.id ? action.payload : spot
+        ),
         spot: {
           ...action.payload,
           SpotImages: action.payload.SpotImages || []

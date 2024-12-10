@@ -1,89 +1,106 @@
+/* Base header styles */
 .header {
+  width: 90%;
+  background-color: white;
+  border-bottom: 1px solid #dddddd;
+  padding: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 80px;
-  border-bottom: 1px solid #ebebeb;
 }
 
-.logo-link .logo {
+/* Logo styles */
+.logo-link {
+  text-decoration: none;
+}
+
+.logo {
   height: 100px;
+  object-fit: contain;
 }
 
+/* Navigation and buttons container */
 .auth-buttons {
   display: flex;
   align-items: center;
+  gap: 16px;
 }
 
+/* Base button styles */
 .button {
   text-decoration: none;
   color: #222;
-  font-weight: 500;
-  padding: 10px 15px;
-  border-radius: 21px;
   font-size: 14px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
 }
 
 .button:hover {
-  background-color: #f7f7f7;
+  background-color: #f4f4f4;
 }
 
 .create-spot {
   font-weight: 600;
 }
 
+/* User menu styles */
 .user-menu {
   position: relative;
-  margin-left: 8px;
 }
 
 .user-menu-button {
   display: flex;
   align-items: center;
-  background: none;
-  border: 1px solid #ddd;
-  border-radius: 21px;
-  padding: 5px 5px 5px 12px;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.user-menu-button::after {
-  content: '\2630';
-  margin-left: 8px;
-  font-size: 18px;
-}
-
-.user-menu-dropdown {
-  position: absolute;
-  right: 0;
-  top: 120%;
+  gap: 8px;
+  padding: 8px 16px;
+  border: 1px solid #dddddd;
+  border-radius: 8px;
   background-color: white;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  padding: 8px 0;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.12);
-  min-width: 240px;
-}
-
-.user-greeting,
-.user-email,
-.logout-button {
-  padding: 12px 16px;
-  margin: 0;
   font-size: 14px;
   color: #222;
   cursor: pointer;
-  background: none;
-  border: none;
+  transition: box-shadow 0.2s ease;
+}
+
+.user-menu-button:hover {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Dropdown menu styles */
+.user-menu-dropdown {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  background-color: white;
+  border: 1px solid #dddddd;
+  border-radius: 8px;
+  padding: 8px 0;
+  min-width: 200px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Menu items */
+.user-greeting,
+.user-email,
+.menu-button,
+.logout-button {
   width: 100%;
   text-align: left;
+  padding: 8px 16px;
+  background: none;
+  border: none;
+  font-size: 14px;
+  color: #222;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
 .user-greeting:hover,
 .user-email:hover,
+.menu-button:hover,
 .logout-button:hover {
-  background-color: #f7f7f7;
+  background-color: #f4f4f4;
 }
 
 .user-greeting {
@@ -91,43 +108,36 @@
 }
 
 .user-email {
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #dddddd;
+  margin-bottom: 8px;
 }
 
-.logout-button {
-  color: #222;
-}
-
-@media (max-width: 768px) {
+/* Media queries for responsiveness */
+@media screen and (max-width: 768px) {
   .header {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 10px 20px;
+    padding: 16px;
   }
+  
+  .logo {
+    height: 32px;
+  }
+  
+  .button {
+    padding: 6px 12px;
+  }
+}
 
+@media screen and (max-width: 480px) {
+  .header {
+    padding: 12px;
+  }
+  
   .auth-buttons {
-    width: 100%;
-    justify-content: space-between;
+    gap: 8px;
   }
-
-  .user-menu-dropdown {
-    right: auto;
-    left: 0;
+  
+  .button {
+    padding: 4px 8px;
+    font-size: 13px;
   }
-}
-
-.menu-button {
-  padding: 12px 16px;
-  margin: 0;
-  font-size: 14px;
-  color: #222;
-  cursor: pointer;
-  background: none;
-  border: none;
-  width: 100%;
-  text-align: left;
-}
-
-.menu-button:hover {
-  background-color: #f7f7f7;
 }
