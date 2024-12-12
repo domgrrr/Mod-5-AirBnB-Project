@@ -16,7 +16,7 @@ module.exports = {
 					preview: true,
 				},
 				{
-					spotId: 2,
+					spotId: 1,
 					url: 'https://i.ibb.co/N3rZ8D7/Beach-House.png',
 					preview: false,
 				},
