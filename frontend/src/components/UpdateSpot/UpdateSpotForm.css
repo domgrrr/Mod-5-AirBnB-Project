@@ -9,7 +9,6 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Error styles */
 .error {
   color: #e34850;
   font-size: 0.875rem;
@@ -26,7 +25,6 @@
   text-align: center;
 }
 
-/* Headings */
 h1 {
   text-align: center;
   margin-bottom: 20px;
@@ -40,7 +38,6 @@ h2 {
   margin-bottom: 10px;
 }
 
-/* Section styles */
 section {
   margin-bottom: 30px;
   padding-bottom: 20px;
@@ -58,7 +55,6 @@ section p {
   line-height: 1.4;
 }
 
-/* Input styles */
 input, textarea {
   width: 100%;
   padding: 12px;
@@ -87,7 +83,6 @@ textarea {
   max-height: 300px;
 }
 
-/* Location inputs grid */
 .location-inputs {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -99,14 +94,12 @@ textarea {
   margin-bottom: 0;
 }
 
-/* Optional label */
 .optional-label {
   color: #717171;
   font-size: 0.875rem;
   margin-left: 8px;
 }
 
-/* Character count */
 .char-count {
   font-size: 0.875rem;
   margin-top: -5px;
@@ -122,7 +115,6 @@ textarea {
   color: #28a745;
 }
 
-/* Button styles */
 button {
   display: block;
   width: 100%;
@@ -147,7 +139,6 @@ button:disabled {
   opacity: 0.8;
 }
 
-/* Loading state */
 .loading-container {
   display: flex;
   justify-content: center;
@@ -156,7 +147,6 @@ button:disabled {
   color: #717171;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .update-spot-form-container {
     margin: 10px;
@@ -177,7 +167,6 @@ button:disabled {
   }
 }
 
-/* Image input section */
 .image-input-section input {
   margin-bottom: 15px;
 }
@@ -190,8 +179,7 @@ button:disabled {
   margin-bottom: 20px;
 }
 
-/* Price input specific styles */
-input[type="number"] {
+nput[type="number"] {
   -moz-appearance: textfield;
 }
 
@@ -201,7 +189,6 @@ input[type="number"]::-webkit-inner-spin-button {
   margin: 0;
 }
 
-/* Form validation visual feedback */
 input:invalid,
 textarea:invalid {
   border-color: #e34850;

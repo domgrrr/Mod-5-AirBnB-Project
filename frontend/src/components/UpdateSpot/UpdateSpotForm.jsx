@@ -70,7 +70,6 @@ const UpdateSpotForm = () => {
     let isValid = true;
     let parsedValue;
   
-    // Move variable declarations outside of cases
     switch (name) {
       case 'country':
       case 'address':
@@ -107,7 +106,7 @@ const UpdateSpotForm = () => {
   
     return isValid;
   };
-  
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -115,14 +114,12 @@ const UpdateSpotForm = () => {
       [name]: value
     }));
 
-    // Validate field and update validFields state
     const isValid = validateField(name, value);
     setValidFields(prev => ({
       ...prev,
       [name]: isValid
     }));
 
-    // Clear error when field is modified
     if (errors[name]) {
       setErrors(prev => {
         const newErrors = { ...prev };
