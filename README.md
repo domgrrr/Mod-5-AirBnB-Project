@@ -1,4 +1,4 @@
-# Mod-5 Airbnb Project
+# Mod-5 Project
 
 ## Welcome to your very own Airbnb replica—where users explore and book unique accommodations effortlessly.
 ## Table of Contents
