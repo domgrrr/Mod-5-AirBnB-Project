@@ -1,3 +1,4 @@
+/* Container styles */
 .update-spot-form-container {
   max-width: 800px;
   margin: 0 auto;
@@ -5,51 +6,207 @@
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.errors {
-  color: red;
-  margin-bottom: 10px;
+/* Error styles */
+.error {
+  color: #e34850;
+  font-size: 0.875rem;
+  margin: 4px 0;
 }
 
+.error-banner {
+  background-color: #ffebee;
+  border: 1px solid #e34850;
+  color: #e34850;
+  padding: 12px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+/* Headings */
 h1 {
   text-align: center;
   margin-bottom: 20px;
+  color: #222;
+  font-size: 2rem;
 }
 
-section {
-  margin-bottom: 20px;
-}
-
-label {
-  display: block;
+h2 {
+  color: #484848;
+  font-size: 1.25rem;
   margin-bottom: 10px;
 }
 
+/* Section styles */
+section {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+section:last-child {
+  border-bottom: none;
+}
+
+section p {
+  color: #717171;
+  margin-bottom: 15px;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+}
+
+/* Input styles */
 input, textarea {
   width: 100%;
-  padding: 8px;
+  padding: 12px;
   margin-top: 5px;
+  margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+input:focus, textarea:focus {
+  border-color: #ff5a5f;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 90, 95, 0.2);
+}
+
+input::placeholder, textarea::placeholder {
+  color: #999;
 }
 
 textarea {
-  height: 100px;
+  height: 120px;
   resize: vertical;
+  min-height: 80px;
+  max-height: 300px;
 }
 
+/* Location inputs grid */
+.location-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.location-inputs input {
+  margin-bottom: 0;
+}
+
+/* Optional label */
+.optional-label {
+  color: #717171;
+  font-size: 0.875rem;
+  margin-left: 8px;
+}
+
+/* Character count */
+.char-count {
+  font-size: 0.875rem;
+  margin-top: -5px;
+  margin-bottom: 10px;
+  text-align: right;
+}
+
+.char-count.warning {
+  color: #f0ad4e;
+}
+
+.char-count.success {
+  color: #28a745;
+}
+
+/* Button styles */
 button {
   display: block;
   width: 100%;
-  padding: 10px;
+  padding: 14px;
   background-color: #ff5a5f;
   color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
 }
 
 button:hover {
   background-color: #e14b4f;
+}
+
+button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+/* Loading state */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  color: #717171;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .update-spot-form-container {
+    margin: 10px;
+    padding: 15px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .location-inputs {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  input, textarea, button {
+    padding: 10px;
+  }
+}
+
+/* Image input section */
+.image-input-section input {
+  margin-bottom: 15px;
+}
+
+.image-input-section input:first-of-type {
+  border-color: #ff5a5f;
+}
+
+.image-input-section p {
+  margin-bottom: 20px;
+}
+
+/* Price input specific styles */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Form validation visual feedback */
+input:invalid,
+textarea:invalid {
+  border-color: #e34850;
+}
+
+.validation-passed {
+  border-color: #28a745 !important;
 }
