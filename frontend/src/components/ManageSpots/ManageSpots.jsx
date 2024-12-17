@@ -13,15 +13,29 @@ function ManageSpots() {
   const sessionUser = useSelector(state => state.session.user);
   const [showModal, setShowModal] = useState(false);
   const [spotToDelete, setSpotToDelete] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    dispatch(getUserSpots());
-  }, [dispatch]);
+    if (!sessionUser) {
+      navigate('/');
+      return;
+    }
 
-  if (!sessionUser) {
-    navigate('/');
-    return null;
-  }
+    const loadSpots = async () => {
+      try {
+        await dispatch(getUserSpots());
+      } catch (error) {
+        console.error('Error loading spots:', error);
+        if (error.status === 401) {
+          navigate('/');
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadSpots();
+  }, [dispatch, sessionUser, navigate]);
 
   const handleDeleteClick = (spotId) => {
     setSpotToDelete(spotId);
@@ -29,9 +43,16 @@ function ManageSpots() {
   };
 
   const confirmDelete = async () => {
-    await dispatch(deleteSpot(spotToDelete));
-    setShowModal(false);
-    dispatch(getUserSpots());
+    try {
+      await dispatch(deleteSpot(spotToDelete));
+      setShowModal(false);
+      await dispatch(getUserSpots());
+    } catch (error) {
+      console.error('Error deleting spot:', error);
+      if (error.status === 401) {
+        navigate('/');
+      }
+    }
   };
 
   const handleUpdate = (spotId) => {
@@ -42,6 +63,14 @@ function ManageSpots() {
     ...spot,
     previewImage: imageMapping[spot.name] || 'frontend/public/airbnb-logo.png',
   }));
+
+  if (isLoading) {
+    return <div className="loading">Loading...</div>;
+  }
+
+  if (!sessionUser) {
+    return null;
+  }
 
   return (
     <div className="manage-spots-container">

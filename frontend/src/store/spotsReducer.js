@@ -210,7 +210,6 @@ export const updateSpot = (spotId, spotData) => async (dispatch) => {
       throw error;
     }
 
-    const updatedSpot = await response.json();
 
     // Fetch the complete updated spot data
     const finalSpotResponse = await csrfFetch(`/api/spots/${spotId}`);

@@ -64,6 +64,9 @@ input, textarea {
   border-radius: 4px;
   font-size: 1rem;
   transition: border-color 0.2s ease;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
 }
 
 input:focus, textarea:focus {
@@ -127,6 +130,9 @@ button {
   font-size: 1rem;
   font-weight: 500;
   transition: background-color 0.2s ease;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
 }
 
 button:hover {
@@ -179,13 +185,15 @@ button:disabled {
   margin-bottom: 20px;
 }
 
-nput[type="number"] {
+input[type="number"] {
   -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
+  appearance: none;
   margin: 0;
 }
 
