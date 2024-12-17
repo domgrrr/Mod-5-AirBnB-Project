@@ -118,7 +118,7 @@ textarea {
   color: #28a745;
 }
 
-button {
+.update-spot-form-container button {
   display: block;
   width: 100%;
   padding: 14px;
@@ -135,11 +135,11 @@ button {
   -moz-appearance: none;
 }
 
-button:hover {
+.update-spot-form-container button:hover {
   background-color: #e14b4f;
 }
 
-button:disabled {
+.update-spot-form-container button:disabled {
   background-color: #cccccc;
   cursor: not-allowed;
   opacity: 0.8;
