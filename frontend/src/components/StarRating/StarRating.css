@@ -11,6 +11,12 @@
 
 .star {
   font-size: 12px;
+  color: #e4e4e4; /* empty star color */
+  cursor: pointer;
+}
+
+.star.filled {
+  color: #FF5A5F; /* changed from #ffd700 to #FF5A5F to match the red color */
 }
 
 .dot-separator {

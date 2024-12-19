@@ -25,7 +25,7 @@ const SpotDetail = () => {
       }
     };
     fetchSpot();
-  }, [dispatch, spotId]);
+  }, [dispatch, spotId, showReviewModal, reviewToDelete]); // Added showReviewModal and reviewToDelete
 
   if (!spot || !spot.SpotImages) {
     return <div>Loading...</div>;

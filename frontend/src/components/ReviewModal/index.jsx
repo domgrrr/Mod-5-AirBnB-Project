@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { createReview } from '../../store/spotsReducer';
+import StarRating from '../StarRating';  // Add this import
 import './ReviewModal.css';
 
 const ReviewModal = ({ spotId, closeModal }) => {
   const dispatch = useDispatch();
   const [stars, setStars] = useState(0);
   const [review, setReview] = useState('');
-  const [hoveredStar, setHoveredStar] = useState(0);
   const [errors, setErrors] = useState(null);
 
   const handleSubmit = async (e) => {
@@ -37,17 +37,11 @@ const ReviewModal = ({ spotId, closeModal }) => {
           />
           
           <div className="stars-input">
-            {[1, 2, 3, 4, 5].map(num => (
-              <span
-                key={num}
-                className={`star ${num <= (hoveredStar || stars) ? 'filled' : ''}`}
-                onClick={() => setStars(num)}
-                onMouseEnter={() => setHoveredStar(num)}
-                onMouseLeave={() => setHoveredStar(0)}
-              >
-                ★
-              </span>
-            ))}
+            <StarRating 
+              rating={stars}
+              interactive={true}
+              onChange={setStars}
+            />
             <span className="stars-label">Stars</span>
           </div>
 
