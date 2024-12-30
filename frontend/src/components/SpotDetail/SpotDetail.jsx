@@ -25,7 +25,7 @@ const SpotDetail = () => {
       }
     };
     fetchSpot();
-  }, [dispatch, spotId, showReviewModal, reviewToDelete]); // Added showReviewModal and reviewToDelete
+  }, [dispatch, spotId, showReviewModal, reviewToDelete]);
 
   if (!spot || !spot.SpotImages) {
     return <div>Loading...</div>;
@@ -74,7 +74,7 @@ const SpotDetail = () => {
           <div className='price-rating'>
             <span className='price'>${spot.price} night</span>
             <StarRating 
-              rating={spot.avgRating} 
+              rating={spot.avgStarRating} 
               showCount={true}
               reviewCount={reviews.length}
             />
@@ -86,7 +86,7 @@ const SpotDetail = () => {
       <div className='reviews-section'>
         <h2>
           <StarRating 
-            rating={spot.avgRating} 
+            rating={spot.avgStarRating} 
             showCount={true}
             reviewCount={reviews.length}
           />
