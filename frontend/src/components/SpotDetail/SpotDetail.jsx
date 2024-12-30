@@ -147,4 +147,6 @@ const SpotDetail = () => {
   );
 };
 
+
+
 export default SpotDetail;
